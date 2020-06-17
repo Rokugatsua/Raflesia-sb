@@ -73,7 +73,7 @@ class Notation:
         self._temp = {}
         self.key = key
 
-    def get(self, key) -> dict:
+    def get(self, key:str=None) -> dict:
         if self.key or key:
             if self.key and not key:
                 key =  self.key
@@ -87,3 +87,14 @@ class Notation:
                 items[jkey] = jvalue
                 
         return items
+
+  
+    def check_key(self, key):
+        if self.key or key:
+            if self.key and not key:
+                key =  self.key
+                return key
+            else:
+                return key
+        else:
+            print('{} : fill key please'.format(type(self).__name__))
