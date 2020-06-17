@@ -65,3 +65,25 @@ def jwrite(json_data:dict, json_file=database_path):
     """ write data to json """
     with open(json_file, 'w') as jfile:
         json.dump(json_data, fp=jfile, indent=4)
+
+
+class Notation:
+    def __init__(self, key:str=None, jgen=None):
+        self.gen = jgen if jgen else jread()
+        self._temp = {}
+        self.key = key
+
+    def get(self, key) -> dict:
+        if self.key or key:
+            if self.key and not key:
+                key =  self.key
+        else:
+            print('{} : fill key please'.format(type(self).__name__))
+
+        items = {}
+        for jkey, jvalue in self.gen:
+            self._temp[jkey] = jvalue
+            if jkey == key:
+                items[jkey] = jvalue
+                
+        return items
