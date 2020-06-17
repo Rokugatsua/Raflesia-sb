@@ -88,6 +88,20 @@ class Notation:
                 
         return items
 
+    def set(self, value, key:str=None, new=False):
+        key = self.check_key(key)
+
+        if not self._temp:
+            self.get(key)
+
+        if not new:
+            for jkey in self._temp.keys():
+                if jkey == key:
+                    self._temp[key] = value
+        else:
+            self._temp[key] = value
+
+        jwrite(self._temp)
   
     def check_key(self, key):
         if self.key or key:
