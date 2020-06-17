@@ -1,5 +1,4 @@
 {
-    "account":{
-        "kas":200
-    }
+    "database": "default.json",
+    "title": "unknown"
 }

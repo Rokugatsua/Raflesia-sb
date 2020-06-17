@@ -59,3 +59,9 @@ def jread(json_file=database_path):
         # generate key and value in json file
         for keyval in jdata.items():
             yield keyval
+
+
+def jwrite(json_data:dict, json_file=database_path):
+    """ write data to json """
+    with open(json_file, 'w') as jfile:
+        json.dump(json_data, fp=jfile, indent=4)
