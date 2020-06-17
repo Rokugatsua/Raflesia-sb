@@ -13,14 +13,14 @@ def jpath(json_file:str='default.json') -> str:
     else:
         return os.path.join(curdir, 'app', 'data', json_file)
 
-
 # __setting path__
-
 setting_path = jpath('setting.json')
 
 class jset:
+    """read and write json setting file"""
     info_path = setting_path
     def __init__(self, setting_file=setting_path):
+        
         self.setting_file = setting_file
         self._temp = {}
 
@@ -51,3 +51,11 @@ class jset:
 
 
 database_path = jpath(jset().get('database'))
+
+def jread(json_file=database_path):
+    """ reading json file as generator """
+    with open(json_file, 'r') as jfile:
+        jdata = json.load(jfile)
+        # generate key and value in json file
+        for keyval in jdata.items():
+            yield keyval
