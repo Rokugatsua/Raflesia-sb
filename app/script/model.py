@@ -32,11 +32,17 @@ class Income(Model):
     val_type = list()
 
     def add(self, value):
-        self.val_type = self.value
         self.val_type.append(value)
 
     def adds(self, values:list):
         if type(values) == list:
             self.val_type.extend(values)
+
+    def delete(self, value:list):
+        if value in self.value:
+            try:
+                self.value.remove(value)
+            except:
+                print(f"{value} not exists")
 
 
