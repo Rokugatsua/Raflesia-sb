@@ -1,4 +1,6 @@
 {
     "database": "default.json",
-    "title": "unknown"
+    "title": "unknown",
+    "account": {},
+    "income": {}
 }
