@@ -1,3 +1,5 @@
+from typing import NewType
+
 from app.script import jnote
 
 class Model(object):
@@ -27,6 +29,14 @@ class Account(Model):
     pass
 
 class Income(Model):
-    pass
+    val_type = list()
+
+    def add(self, value):
+        self.val_type = self.value
+        self.val_type.append(value)
+
+    def adds(self, values:list):
+        if type(values) == list:
+            self.val_type.extend(values)
 
 
