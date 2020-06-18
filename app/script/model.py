@@ -69,8 +69,8 @@ class Account(Model):
                 self.value[category][key] = value
             else:
                 print(f"'{key}' already exist")
-        except KeyError as e:
-            print(f"{e} not found")
+        except:
+            print(f"'{category}' not found")
 
     def delete_account(self, key:str, category:str):
         key.lower()
@@ -79,8 +79,8 @@ class Account(Model):
                 del self.value[category][key]
             else:
                 print(f"'{key}' not found")
-        except KeyError as e:
-            print(f"{e} not found")                
+        except:
+            print(f"'{category}' not found")                
 
     def edit_account(self, old_key:str, new_key:str, category:str):
         old_key.lower()
@@ -93,16 +93,16 @@ class Account(Model):
                 self.value[category][new_key] = val
 
                 del self.value[old_key]
-        except KeyError as e:
-            print(f"{e} not found")
+        except:
+            print(f"'{category}' not found")
 
     def update_account(self, key:str, value:int, category:str):
         key.lower()
         try:
             if key in self.value[category.lower()]:
                 self.value[category][key] =  value
-        except KeyError as e:
-            print(f"{e} not found")
+        except:
+            print(f"'{category}' not found")
         
 
 class Income(Model):
