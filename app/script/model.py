@@ -22,6 +22,8 @@ class Model(object):
         f"get value from '{self.key}' key"
         return self.__temp[self.key]
 
+    def commit(self):
+        self.notation.set(value=self.value, key=self.key)
 
 
 
@@ -29,20 +31,35 @@ class Account(Model):
     pass
 
 class Income(Model):
-    val_type = list()
-
     def add(self, value):
-        self.val_type.append(value)
+        if value not in self.value:
+            self.value.append(value)
+        else:
+            print(f"'{value}' already exist")
 
     def adds(self, values:list):
         if type(values) == list:
-            self.val_type.extend(values)
+            temp = list()
+            for value in values:
+                if value not in self.value:
+                    self.value.append(value)
+                else:
+                    temp.append(value)
+            if temp:
+                print(f"{temp} already exist")
 
     def delete(self, value:list):
         if value in self.value:
             try:
                 self.value.remove(value)
             except:
-                print(f"{value} not exists")
+                pass
+        else:
+            print(f"'{value}' not exists")
+        
 
+    def edit(self, old_value, new_value):
+        if old_value in self.value and new_value not in self.value:
+            index = self.value.index(old_value)
+            self.value[index] = new_value
 
