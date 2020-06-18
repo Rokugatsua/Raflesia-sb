@@ -1,4 +1,5 @@
 {
     "database": "default.json",
-    "title": "unknown"
+    "title": "unknown",
+    "geometry": "500x400"
 }

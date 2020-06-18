@@ -39,11 +39,13 @@ class Account(Model):
         super().new_init(self.val_type)
 
     def add_category(self, key:str):
-        key.lower()
-        if key not in self.value:
-            self.value[key] = {}
-        else:
-            print(f"'{key}' already exist")
+        try:
+            if key not in self.value:
+                self.value[key] = {}
+            else:
+                print(f"'{key}' already exist")
+        except:
+            print(f"'{key}' not found")
 
     def delete_category(self, key:str):
         key.lower()
