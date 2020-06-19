@@ -83,6 +83,7 @@ class Account(tk.Frame):
         contentFrame = tk.Frame(self)
         contentFrame.pack()
 
+        account = model.Account()
 
 
 class Transaction(tk.Frame):

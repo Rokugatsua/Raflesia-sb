@@ -31,9 +31,9 @@ class Model(object):
 
 
 class Account(Model):
-    def __init__(self, val_type):
+    def __init__(self):
         super().__init__()
-        self.val_type = val_type
+        self.val_type = dict()
 
     def new_init(self):
         super().new_init(self.val_type)
@@ -144,9 +144,9 @@ class Expense(Income):
     pass
 
 class Budget(Model):
-    def __init__(self, val_type):
+    def __init__(self):
         super().__init__()
-        self.val_type = val_type
+        self.val_type = dict()
     
     def new_init(self):
         super().new_init(self.val_type)
