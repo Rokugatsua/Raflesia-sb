@@ -32,12 +32,13 @@ class Application(tk.Frame):
         self.master.config(menu=menu)
 
     def wrapper(self):
-        self.wrapframe = tk.Frame(self, bg='black')
+        self.wrapframe = tk.Frame(self)
         self.wrapframe.pack(fill='both', expand=True, side='top')
 
         Frame = (
             Account,
-            Transaction
+            Transaction,
+            AddAccount
         )
         self.container = {}
         for F in Frame:
@@ -70,6 +71,7 @@ class Account(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.parent = parent
         self.master = master
+        self.account = model.Account()
         self.title()
         self.content()
 
@@ -79,13 +81,95 @@ class Account(tk.Frame):
         title = tk.Label(headframe, text="Account list", anchor='w')
         title.pack(side='left', padx=15, ipadx=5, ipady=10)
 
+        var_total = "{:,}".format(sum([dval for cvalues in self.account.value.values() \
+            for dval in cvalues.values()]))
+
+        total = tk.Label(headframe, text="Total : " + var_total, anchor='e', padx=15)
+        total.pack(side='right')
+
+
     def content(self):
         contentFrame = tk.Frame(self)
-        contentFrame.pack()
+        contentFrame.pack(fill='x')
 
-        account = model.Account()
+        for key, dvalues in self.account.value.items():
+            ctgFrame = tk.Frame(contentFrame, width=400)
+            ctgFrame.pack(fill='x')
+            ctglabel = tk.Label(ctgFrame, text=str(key).capitalize(), anchor='w', bg='green', padx=10)
+            ctglabel.pack(side='top', fill='x', ipadx=25, ipady=2)
+
+            ctgvalue = tk.Frame(ctgFrame)
+            ctgvalue.pack(side='bottom', fill='x')
+
+            for dkey, dvalue in dvalues.items():
+                detailFrame = tk.Frame(ctgvalue)
+                detailFrame.pack(fill='x', expand=True, padx=15, ipady=1)
+                dname = tk.Label(detailFrame, text=str(dkey).capitalize(), anchor='w', padx=10)
+                dname.pack(side='left', expand=True, ipadx=10, fill='x')
+                price = "{:,}".format(dvalue)
+                dval = tk.Label(detailFrame, text=price, anchor='e', padx=5)
+                dval.pack(side='right',expand=True, ipadx=10, fill='x')
+
+class AddAccount(tk.Frame):
+    def __init__(self, parent, master):
+        tk.Frame.__init__(self, parent)
+        self.master = master
+        self.parent = parent
+        self.account = model.Account()
+        self.title()
+        self.content()
+
+    def title(self):
+        headframe = tk.Frame(self)
+        headframe.pack(side='top', fill='x')
+        title = tk.Label(headframe, text="Add Account", anchor='w')
+        title.pack(side='left', padx=15, ipadx=5, ipady=10)
 
 
+    def content(self):
+        contentframe = tk.Frame(self)
+        contentframe.pack(fill='x')
+        self.form = tk.Frame(self)
+        self.form.pack()
+
+        self.cval, self.nval, self.pval = tk.StringVar(), tk.StringVar(), tk.IntVar()
+
+        ctgframe = tk.Frame(self.form)
+        ctgframe.pack(fill='x', pady=3)
+        ctglabel = tk.Label(ctgframe, text="Category", anchor='e', padx=15)
+        ctglabel.pack(side='left', fill='x')
+        ctgnames = list(self.account.value.keys())
+        ctgbox = tk.Spinbox(ctgframe, values=ctgnames, width=38)
+        ctgbox.pack(side='right')
+        self.cval.set(ctgbox.get())
+
+        nameframe = tk.Frame(self.form)
+        nameframe.pack(fill='x', pady=3)
+        namelabel = tk.Label(nameframe, text="Account Name", anchor='e', padx=15)
+        namelabel.pack(side='left', fill='x')
+        nameentry = tk.Entry(nameframe, textvariable=self.nval, width=40)
+        nameentry.pack(side='right')
+
+        pricframe = tk.Frame(self.form)
+        pricframe.pack(fill='x', pady=3)
+        priclabel = tk.Label(pricframe, text="Value", anchor='e', padx=15)
+        priclabel.pack(side='left', fill='x')
+        pricentry = tk.Entry(pricframe, textvariable=self.pval, width=40)
+        pricentry.pack(side='right')
+
+        submit = tk.Button(self.form, relief='solid', text='Submit', command=self.addvalue)
+        submit.pack(expand=True, pady=3)
+
+    def addvalue(self):
+        if self.nval and self.pval and self.cval:
+            self.account.add_account(
+                str(self.nval.get()).lower(),
+                self.pval.get(),
+                str(self.cval.get()).lower()
+                )
+            self.account.commit()
+        else:
+            print("please insert all")
 class Transaction(tk.Frame):
     def __init__(self, parent, master):
         tk.Frame.__init__(self, parent)

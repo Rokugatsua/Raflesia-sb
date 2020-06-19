@@ -29,7 +29,12 @@ class Menu:
     def account(self):
         accountmenu = tk.Menu(self.menu, tearoff=0)
         accountmenu.add_command(
-            label="new",
+            label="View Details",
             command=lambda : self.parent.switch_frame('Account'))
+        
+        addmenu = tk.Menu(accountmenu, tearoff=0)
+        addmenu.add_command(label="account", command=lambda : self.parent.switch_frame('AddAccount'))
+        addmenu.add_command(label="category", command=lambda : self.parent.switch_frame('AddCategory'))
+        accountmenu.add_cascade(label="add", menu=addmenu)
         self.menu.add_cascade(label="account", menu=accountmenu)
         
