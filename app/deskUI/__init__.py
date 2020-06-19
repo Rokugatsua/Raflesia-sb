@@ -80,9 +80,10 @@ class Account(tk.Frame):
         self.content()
 
     def title(self):
-        headframe = tk.Frame(self)
+        headframe = tk.Frame(self, bg='steel blue')
         headframe.pack(side='top', fill='x')
         title = tk.Label(headframe, text="Account list", anchor='w')
+        title.config(font=tfont, bg='steel blue')
         title.pack(side='left', padx=15, ipadx=5, ipady=10)
 
         var_total = "{:,}".format(sum([dval for cvalues in self.account.value.values() \
@@ -124,9 +125,10 @@ class AddAccount(tk.Frame):
         self.content()
 
     def title(self):
-        headframe = tk.Frame(self)
+        headframe = tk.Frame(self, bg='steel blue')
         headframe.pack(side='top', fill='x')
         title = tk.Label(headframe, text="Add Account", anchor='w')
+        title.config(font=tfont, bg='steel blue')
         title.pack(side='left', padx=15, ipadx=5, ipady=10)
 
 
@@ -197,7 +199,7 @@ class Category(tk.Frame):
         headframe = tk.Frame(self, bg='steel blue')
         headframe.pack(side='top', fill='x')
         title = tk.Label(headframe, text="Category", anchor='w')
-        title.config(font=('fixedsys',12,'bold'))
+        title.config(font=tfont, bg='steel blue')
         title.pack(side='left', padx=15, ipadx=5, ipady=10)
 
     def content(self):
@@ -272,6 +274,13 @@ class Transaction(tk.Frame):
         self.parent = parent
         self.master = master
         self.content()
+
+    def title(self):
+        headframe = tk.Frame(self, bg='steel blue')
+        headframe.pack(side='top', fill='x')
+        title = tk.Label(headframe, text="Transaction", anchor='w')
+        title.config(font=tfont, bg='steel blue')
+        title.pack(side='left', padx=15, ipadx=5, ipady=10)
 
     def content(self):
         label = tk.Label(self, text="Transaction list")
