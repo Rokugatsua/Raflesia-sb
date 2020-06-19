@@ -207,7 +207,8 @@ class Category(tk.Frame):
         self.contentframe.pack(fill='both')
 
         listtag = tk.Label(self.contentframe, text="List Category")
-        listtag.pack(fill='x', padx=20, pady=3)
+        listtag.config(font=cfont)
+        listtag.pack(fill='x', padx=20, pady=5)
 
         listframe = tk.Frame(self.contentframe, width=100)
         listframe.pack()
@@ -225,24 +226,27 @@ class Category(tk.Frame):
 
 
         addtag = tk.Label(self.contentframe, text="Add New Category")
-        addtag.pack()
+        addtag.config(font=cfont)
+        addtag.pack(pady=5)
 
         addframe = tk.Frame(self.contentframe)
         addframe.pack()
 
         self.cval = tk.StringVar()
         ctglabel = tk.Label(addframe, text="Category Name", anchor="e")
-        ctglabel.pack()
+        ctglabel.pack(side='left', fill='x', expand=True)
+
+        submit = tk.Button(addframe, text="submit", relief='solid', command=self.addvalue)   
+        submit.pack(side='right', padx=5)
+
         ctgvalue = tk.Entry(addframe, textvariable=self.cval)
-        ctgvalue.pack()
-        submit = tk.Button(addframe, text="submit", relief='solid', command=self.addvalue)
-        submit.pack()
+        ctgvalue.pack(side='right', padx=5)        
 
 
     def btn_edit(self, frame, value):
         button = tk.Button(
             frame, text='edit', relief='flat',
-            command=lambda : self.editvalue(value)
+            command=lambda : self.editframe(value)
         )
         button.pack(side='right')
 
@@ -254,17 +258,50 @@ class Category(tk.Frame):
         delButton.pack(side="right")
 
     def delvalue(self, value):
-        print(value)
+        if value:
+            msg = messagebox.askyesno("delete", f"are you sure delete {value}")
+            if msg == 'yes':
+                self.account.delete_category(value.lower())
+                self.account.commit()
 
-    def editvalue(self, value):
-        print(value)
+        self.refresh()
+
+    def editframe(self, value):
+        self.new_name = tk.StringVar()
+        self.eframe = tk.Toplevel(self.contentframe)
+        info = tk.Label(self.eframe, text="Please fill new name")
+        info.pack()
+        entry = tk.Entry(self.eframe, textvariable=self.new_name)
+        entry.pack()
+        
+        btn = tk.Button(self.eframe, text='save')
+        btn.config(command=lambda : self.editvalue(value))
+        btn.pack()
+
+    def editvalue(self, old_value):
+        new_value = self.new_name.get()
+        if old_value and new_value:
+            self.account.edit_category(old_value.lower(), new_value.lower())
+            self.account.commit()
+            self.eframe.destroy()
+            self.refresh()
+        else:
+            messagebox.showinfo("fill", "Please fill new name")
+
 
     def addvalue(self):
         if self.cval.get():
             self.account.add_category(str(self.cval.get()).lower())
             messagebox.showinfo("info", f"succes add {self.cval.get()}")
+            self.account.commit()
+            self.refresh()
         else:
             messagebox.showinfo("info", "please fill category name")
+
+
+    def refresh(self):
+        self.contentframe.destroy()
+        self.content()
 
 
 
