@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 
 from app.script import jnote
 from app.deskUI import menubar
@@ -132,16 +133,16 @@ class AddAccount(tk.Frame):
         self.form = tk.Frame(self)
         self.form.pack()
 
-        self.cval, self.nval, self.pval = tk.StringVar(), tk.StringVar(), tk.IntVar()
+        self.nval, self.pval = tk.StringVar(), tk.IntVar()
+        self.cval = tk.StringVar()
 
         ctgframe = tk.Frame(self.form)
         ctgframe.pack(fill='x', pady=3)
         ctglabel = tk.Label(ctgframe, text="Category", anchor='e', padx=15)
         ctglabel.pack(side='left', fill='x')
         ctgnames = list(self.account.value.keys())
-        ctgbox = tk.Spinbox(ctgframe, values=ctgnames, width=38)
-        ctgbox.pack(side='right')
-        self.cval.set(ctgbox.get())
+        self.ctgbox = tk.Spinbox(ctgframe, values=ctgnames, width=38)
+        self.ctgbox.pack(side='right')
 
         nameframe = tk.Frame(self.form)
         nameframe.pack(fill='x', pady=3)
@@ -161,6 +162,7 @@ class AddAccount(tk.Frame):
         submit.pack(expand=True, pady=3)
 
     def addvalue(self):
+        self.cval.set(self.ctgbox.get())
         if self.nval and self.pval and self.cval:
             self.account.add_account(
                 str(self.nval.get()).lower(),
@@ -168,8 +170,17 @@ class AddAccount(tk.Frame):
                 str(self.cval.get()).lower()
                 )
             self.account.commit()
+            messagebox.showinfo('info',
+                f"Succes add {self.nval.get()} on {self.cval.get()}"
+                )
         else:
             print("please insert all")
+
+    def refresh(self):
+        self.nval.set('')
+        self.pval.set(0)
+        self.master.update()
+
 class Transaction(tk.Frame):
     def __init__(self, parent, master):
         tk.Frame.__init__(self, parent)

@@ -2,11 +2,14 @@
     "account": {
         "cash": {
             "kas": 1000,
-            "ovo": 300
+            "ovo": 300,
+            "gopay": 300000,
+            "mandiri": 500000
         },
         "bank": {
             "bca": 300,
-            "simpeda": 1815008
+            "simpeda": 1815008,
+            "mandiri": 3000000
         }
     }
 }
