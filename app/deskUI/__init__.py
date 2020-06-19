@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import ttk
 
 from app.script import jnote
 from app.deskUI import menubar
@@ -321,8 +322,35 @@ class Transaction(tk.Frame):
         title.pack(side='left', padx=15, ipadx=5, ipady=10)
 
     def content(self):
-        label = tk.Label(self, text="Transaction list")
-        label.pack()
-        print('arss')
+        self.contentframe = tk.Frame(self)
+        self.contentframe.pack(fill='both',expand=True)
+
+        transaction = [
+            ('13', 'beli', 'soci', 'cash', 1000000),
+            ('13', 'beli', 'soci', 'cash', -20000)
+        ]
+
+        tree = ttk.Treeview(self.contentframe)
+        # Column declaration
+        tree['columns'] = ( 'detail', 'ie', 'ctg', 'price')
+        tree.column("#0",width=80,minwidth=40, stretch=tk.NO)
+        tree.column("detail", width=140, minwidth=70,)
+        tree.column("ie", width=100, minwidth=50, stretch=tk.NO)
+        tree.column("ctg", width=100, minwidth=50, stretch=tk.NO)
+        tree.column("price", width=100, minwidth=50, stretch=tk.NO)
+
+        # Heading Declaration
+        tree.heading('#0', text="date", anchor='w')
+        tree.heading('detail', text="detail", anchor='w')
+        tree.heading('ie', text="category", anchor='w')
+        tree.heading('ctg', text="account", anchor='w')
+        tree.heading('price', text="price", anchor='w')
+
+        for dat, det, ie, ctg, val in transaction:
+            price = "{:,}".format(val)
+            tree.insert('','end', text=dat, values=(det, ie, ctg, price))
+
+        tree.pack(fill='both', expand=True)
+
 
     
