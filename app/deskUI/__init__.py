@@ -310,6 +310,7 @@ class Transaction(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.parent = parent
         self.master = master
+        self.title()
         self.content()
 
     def title(self):
