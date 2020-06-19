@@ -6,6 +6,8 @@ from app.deskUI import menubar
 from app.script import model
 
 js = jnote.jset()
+tfont = ('Fixedsys','12','bold')
+cfont = ('Arial','12','bold')
 
 def run():
     root = tk.Tk()
@@ -39,7 +41,8 @@ class Application(tk.Frame):
         Frame = (
             Account,
             Transaction,
-            AddAccount
+            AddAccount,
+            Category
         )
         self.container = {}
         for F in Frame:
@@ -163,7 +166,7 @@ class AddAccount(tk.Frame):
 
     def addvalue(self):
         self.cval.set(self.ctgbox.get())
-        if self.nval and self.pval and self.cval:
+        if self.nval.get() and self.pval.get() and self.cval.get():
             self.account.add_account(
                 str(self.nval.get()).lower(),
                 self.pval.get(),
@@ -174,12 +177,94 @@ class AddAccount(tk.Frame):
                 f"Succes add {self.nval.get()} on {self.cval.get()}"
                 )
         else:
-            print("please insert all")
+            messagebox.showinfo("info", "please fill all form")
 
     def refresh(self):
         self.nval.set('')
         self.pval.set(0)
         self.master.update()
+
+class Category(tk.Frame):
+    def __init__(self, parent, master):
+        tk.Frame.__init__(self, parent)
+        self.parent = parent
+        self.maseter = master
+        self.account = model.Account()
+        self.title()
+        self.content()
+
+    def title(self):
+        headframe = tk.Frame(self, bg='steel blue')
+        headframe.pack(side='top', fill='x')
+        title = tk.Label(headframe, text="Category", anchor='w')
+        title.config(font=('fixedsys',12,'bold'))
+        title.pack(side='left', padx=15, ipadx=5, ipady=10)
+
+    def content(self):
+        self.contentframe = tk.Frame(self)
+        self.contentframe.pack(fill='both')
+
+        listtag = tk.Label(self.contentframe, text="List Category")
+        listtag.pack(fill='x', padx=20, pady=3)
+
+        listframe = tk.Frame(self.contentframe, width=100)
+        listframe.pack()
+
+        for ckey in self.account.value.keys():
+            clis = tk.Frame(listframe,  borderwidth=1, relief='solid')
+            clis.pack()
+
+            clname = tk.Label(clis, text=str(ckey).capitalize(), anchor='w')
+            clname.config(width=40)
+            clname.pack(side='left', fill='x', expand=True)
+            
+            self.btn_del(clis, ckey)
+            self.btn_edit(clis, ckey)
+
+
+        addtag = tk.Label(self.contentframe, text="Add New Category")
+        addtag.pack()
+
+        addframe = tk.Frame(self.contentframe)
+        addframe.pack()
+
+        self.cval = tk.StringVar()
+        ctglabel = tk.Label(addframe, text="Category Name", anchor="e")
+        ctglabel.pack()
+        ctgvalue = tk.Entry(addframe, textvariable=self.cval)
+        ctgvalue.pack()
+        submit = tk.Button(addframe, text="submit", relief='solid', command=self.addvalue)
+        submit.pack()
+
+
+    def btn_edit(self, frame, value):
+        button = tk.Button(
+            frame, text='edit', relief='flat',
+            command=lambda : self.editvalue(value)
+        )
+        button.pack(side='right')
+
+    def btn_del(self, frame, value):
+        delButton = tk.Button(
+            frame, text='delete', relief='flat',
+            command=lambda : self.delvalue(value)
+        )
+        delButton.pack(side="right")
+
+    def delvalue(self, value):
+        print(value)
+
+    def editvalue(self, value):
+        print(value)
+
+    def addvalue(self):
+        if self.cval.get():
+            self.account.add_category(str(self.cval.get()).lower())
+            messagebox.showinfo("info", f"succes add {self.cval.get()}")
+        else:
+            messagebox.showinfo("info", "please fill category name")
+
+
 
 class Transaction(tk.Frame):
     def __init__(self, parent, master):

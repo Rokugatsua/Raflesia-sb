@@ -34,7 +34,7 @@ class Menu:
         
         addmenu = tk.Menu(accountmenu, tearoff=0)
         addmenu.add_command(label="account", command=lambda : self.parent.switch_frame('AddAccount'))
-        addmenu.add_command(label="category", command=lambda : self.parent.switch_frame('AddCategory'))
+        addmenu.add_command(label="category", command=lambda : self.parent.switch_frame('Category'))
         accountmenu.add_cascade(label="add", menu=addmenu)
         self.menu.add_cascade(label="account", menu=accountmenu)
         
