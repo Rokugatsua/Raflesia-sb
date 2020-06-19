@@ -2,6 +2,7 @@ import tkinter as tk
 
 from app.script import jnote
 from app.deskUI import menubar
+from app.script import model
 
 js = jnote.jset()
 
@@ -58,7 +59,7 @@ class Application(tk.Frame):
             self._frame.destroy()
         self._frame = new_page
         print(self._frame)
-        self._frame.pack()
+        self._frame.pack(fill='both', expand=True)
         self.refresh()
 
     def refresh(self):
@@ -69,11 +70,20 @@ class Account(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.parent = parent
         self.master = master
+        self.title()
         self.content()
 
+    def title(self):
+        headframe = tk.Frame(self)
+        headframe.pack(side='top', fill='x')
+        title = tk.Label(headframe, text="Account list", anchor='w')
+        title.pack(side='left', padx=15, ipadx=5, ipady=10)
+
     def content(self):
-        label = tk.Label(self, text="daftar Account")
-        label.pack()
+        contentFrame = tk.Frame(self)
+        contentFrame.pack()
+
+
 
 class Transaction(tk.Frame):
     def __init__(self, parent, master):
