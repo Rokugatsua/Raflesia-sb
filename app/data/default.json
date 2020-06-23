@@ -1,7 +1,7 @@
 {
     "account": {
         "cash": {
-            "kas": 1000,
+            "kas": -100,
             "ovo": 300,
             "gopay": 300000,
             "mandiri": 500000
@@ -21,5 +21,103 @@
         "Salary",
         "Allowance",
         "Bonus"
+    ],
+    "transaction": [
+        {
+            "_id": 1,
+            "date": "2020-06-23",
+            "account": "kas",
+            "category": "Food",
+            "content": "indomaret",
+            "amount": 100
+        },
+        {
+            "_id": 2,
+            "date": "2020-06-23",
+            "account": "kas",
+            "category": "Food",
+            "content": "indomaret",
+            "amount": 100
+        },
+        {
+            "_id": 3,
+            "date": "2020-06-23",
+            "content": "none",
+            "account": "ovo",
+            "category": "Social Life",
+            "amount": -1
+        },
+        {
+            "_id": 4,
+            "date": "2020-06-23",
+            "content": "gajian",
+            "account": "kas",
+            "category": "Salary",
+            "amount": 1000
+        },
+        {
+            "_id": 5,
+            "date": "2020-06-23",
+            "content": "belanja",
+            "account": "ovo",
+            "category": "Food",
+            "amount": -10
+        },
+        {
+            "_id": 6,
+            "date": "2020-06-23",
+            "content": "makan siang",
+            "account": "kas",
+            "category": "Food",
+            "amount": -100
+        },
+        {
+            "_id": 7,
+            "date": "2020-06-23",
+            "content": "traktir",
+            "account": "kas",
+            "category": "Food",
+            "amount": -1000
+        },
+        {
+            "_id": 8,
+            "date": "2020-06-23",
+            "content": "jajan",
+            "account": "kas",
+            "category": "Food",
+            "amount": -1000
+        },
+        {
+            "_id": 9,
+            "date": "2020-06-23",
+            "content": "a",
+            "account": "kas",
+            "category": "Food",
+            "amount": -1000
+        },
+        {
+            "_id": 10,
+            "date": "2020-06-23",
+            "content": "belanja",
+            "account": "kas",
+            "category": "Food",
+            "amount": -100
+        },
+        {
+            "_id": 11,
+            "date": "2020-06-23",
+            "content": "belanja",
+            "account": "kas",
+            "category": "Food",
+            "amount": -100
+        },
+        {
+            "_id": 12,
+            "date": "2020-06-23",
+            "content": "jajan",
+            "account": "kas",
+            "category": "Food",
+            "amount": -1000
+        }
     ]
 }

@@ -26,6 +26,7 @@ class Model(object):
             print(f"'{e}' not found on database" )
 
     def commit(self):
+        print(self.key)
         self.notation.set(value=self.value, key=self.key)
 
 
@@ -103,6 +104,7 @@ class Account(Model):
         try:
             if key in self.value[category.lower()]:
                 self.value[category][key] =  value
+            print('has update')
         except:
             print(f"'{category}' not found")
         
@@ -125,7 +127,7 @@ class Income(Model):
             if temp:
                 print(f"{temp} already exist")
 
-    def delete(self, value:list):
+    def delete(self, value):
         if value in self.value:
             try:
                 self.value.remove(value)
@@ -150,3 +152,64 @@ class Budget(Model):
     
     def new_init(self):
         super().new_init(self.val_type)
+
+class Transaction(Model):
+    def __init__(self):
+        super().__init__()
+        self.val_type = list()
+        self.account = Account()
+
+    def new_init(self):
+        super().new_init(self.val_type)
+
+    def add(self, date, account, category, content, amount, tipe):
+        if date and account and category and content and amount:
+            value = {}
+            value['_id'] = self.value[-1]['_id'] + 1
+            value['date'] = date
+            value['content'] = content
+            value['account'] = account
+            value['category'] = category
+            if tipe == 'expense':
+                value['amount'] = -amount
+            else:
+                value['amount'] = amount
+            self.value.append(value)
+            self.sync(tipe, account, category, amount)
+        else:
+            print("fill all value")
+
+    def delete(self, id):
+        if id:
+            try:
+                self.value.pop(id)
+            except:
+                print("id not exists")
+
+
+    def sync(self, tipe, account, ctg, amount):
+        maccount = Account()
+        ctgname, ctg2, accval, accval2 = None, None, 0, 0
+        for key, val in maccount.value.items():
+            if account in val.keys():
+                ctgname = key
+                accval = val[account]
+            if ctg in val.keys():
+                ctg2 = val
+                accval2 = val[ctg]
+        
+        if tipe == 'expense':
+            
+            maccount.update_account(account,(accval - amount), ctgname)
+        elif tipe == 'income':
+            maccount.update_account(account,(accval + amount), ctgname)
+        elif tipe == 'transfer':
+            maccount.update_account(account,(accval - amount), ctgname)
+            maccount.update_account(ctg,(accval2 + amount), ctg2)
+        else:
+            print('tipe not found')
+
+        maccount.commit()
+
+            
+

@@ -366,6 +366,7 @@ class AddTransaction(tk.Frame):
         self.expense = model.Expense()
         self.income = model.Income()
         self.accounts =  model.Account()
+        self.trans = model.Transaction()
 
 
         self.datevar = tk.StringVar()
@@ -426,9 +427,16 @@ class AddTransaction(tk.Frame):
         self.date.pack(side='right', fill='x', expand=True)
 
         # account
+        if miniframe == 'transfer':
+            acclbl = "From"
+            ctglbl = "To"
+        else:
+            acclbl = 'Account'
+            ctglbl = "Category"
+
         accountframe = tk.Frame(self.form)
         accountframe.pack(fill='x')
-        account = tk.Label(accountframe, text='account', width=10, anchor='w')
+        account = tk.Label(accountframe, text=acclbl, width=10, anchor='w')
         account.pack(side='left')
         self.account = tk.Spinbox(accountframe, values=self.accnames)
         self.account.pack(side='right', fill='x', expand=True)
@@ -436,7 +444,7 @@ class AddTransaction(tk.Frame):
         ctgnames = self.ctgnames[miniframe]
         ctgframe = tk.Frame(self.form)
         ctgframe.pack(fill='x')
-        category = tk.Label(ctgframe, text='Category', width=10, anchor='w')
+        category = tk.Label(ctgframe, text=ctglbl, width=10, anchor='w')
         category.pack(side='left')
         self.category = tk.Spinbox(ctgframe, values=ctgnames)
         self.category.pack(side='right', fill='x', expand=True)
@@ -455,7 +463,22 @@ class AddTransaction(tk.Frame):
         self.contents = tk.Entry(contenframe, textvariable=self.contvar)
         self.contents.pack(side='right', fill='x', expand=True)
 
-        
+        submit = tk.Button(self.form, text="Add")
+        submit.config(command=lambda : self.add_transaction(miniframe))
+        submit.pack(side='top')
+
+
+    def add_transaction(self, tipe):
+        date = self.datevar.get()
+        account = self.account.get()
+        category = self.category.get()
+        content = self.contvar.get()
+        amount = self.amovar.get()
+        self.trans.add(date,account,category,content, amount, tipe)
+        #self.trans.commit()
+
+        self.contvar.set('')
+        self.amovar.set(0)
 
     def switch_content(self, content):
         self.contentframe.destroy()
