@@ -11,5 +11,15 @@
             "simpeda": 1815008,
             "mandiri": 3000000
         }
-    }
+    },
+    "expense": [
+        "Food",
+        "Social Life",
+        "Self development"
+    ],
+    "income": [
+        "Salary",
+        "Allowance",
+        "Bonus"
+    ]
 }

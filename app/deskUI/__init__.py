@@ -43,7 +43,8 @@ class Application(tk.Frame):
             Account,
             Transaction,
             AddAccount,
-            Category
+            Category,
+            AddTransaction,
         )
         self.container = {}
         for F in Frame:
@@ -305,7 +306,6 @@ class Category(tk.Frame):
         self.content()
 
 
-
 class Transaction(tk.Frame):
     def __init__(self, parent, master):
         tk.Frame.__init__(self, parent)
@@ -351,6 +351,116 @@ class Transaction(tk.Frame):
             tree.insert('','end', text=dat, values=(det, ie, ctg, price))
 
         tree.pack(fill='both', expand=True)
+
+class AddTransaction(tk.Frame):
+    def __init__(self, parent, master):
+        tk.Frame.__init__(self, parent)
+        self.master = master
+        self.parent = parent
+        self.init()
+        self.title()
+        self.content()
+
+    def init(self):
+        import datetime
+        self.expense = model.Expense()
+        self.income = model.Income()
+        self.accounts =  model.Account()
+
+
+        self.datevar = tk.StringVar()
+        self.datevar.set(str(datetime.date.today()))
+        self.accvar = tk.StringVar()
+        self.ctgvar = tk.StringVar()
+        self.amovar = tk.IntVar()
+        self.contvar = tk.StringVar()
+
+        self.accnames = [key for key , val in self.accounts.value.items() \
+            for key, val in val.items()]
+        self.ctgnames = {
+            'expense': self.expense.value,
+            'income': self.income.value,
+            'transfer': self.accnames
+        }
+        
+        
+        
+    def title(self):
+        headframe = tk.Frame(self, bg='steel blue')
+        headframe.pack(side='top', fill='x')
+        title = tk.Label(headframe, text="Transaction", anchor='w')
+        title.config(font=tfont, bg='steel blue')
+        title.pack(side='left', padx=15, ipadx=5, ipady=10)
+
+        # ---- Head Menu Frame ----
+        headmenu = tk.Frame(headframe, bg='steel blue')
+        headmenu.pack(side='right', padx=5)
+
+        # ---- Head Menu ----
+        expense = tk.Button(headmenu, text='expense', relief='flat')
+        expense.config(command=lambda : self.switch_content('expense'))
+        expense.pack(side='left')
+        income = tk.Button(headmenu, text='income', relief='flat')
+        income.config(command=lambda : self.switch_content('income'))
+        income.pack(side='left')
+        transfer = tk.Button(headmenu, text='transfer', relief='flat')
+        transfer.config(command=lambda : self.switch_content('transfer'))
+        transfer.pack(side='left')
+
+    def content(self, miniframe='expense'):
+        self.contentframe = tk.Frame(self)
+        self.contentframe.pack(fill='both',expand=True)
+
+        contenttitle = tk.Label(self.contentframe, text='Add New ' + miniframe)
+        contenttitle.pack(fill='x', side='top')
+
+        self.form = tk.Frame(self.contentframe)
+        self.form.pack()
+
+        # date
+        dateframe = tk.Frame(self.form)
+        dateframe.pack(fill='x')
+        datelbl = tk.Label(dateframe, text='Date', width=10, anchor='w')
+        datelbl.pack(side='left')
+        self.date = tk.Entry(dateframe, textvariable=self.datevar)
+        self.date.pack(side='right', fill='x', expand=True)
+
+        # account
+        accountframe = tk.Frame(self.form)
+        accountframe.pack(fill='x')
+        account = tk.Label(accountframe, text='account', width=10, anchor='w')
+        account.pack(side='left')
+        self.account = tk.Spinbox(accountframe, values=self.accnames)
+        self.account.pack(side='right', fill='x', expand=True)
+
+        ctgnames = self.ctgnames[miniframe]
+        ctgframe = tk.Frame(self.form)
+        ctgframe.pack(fill='x')
+        category = tk.Label(ctgframe, text='Category', width=10, anchor='w')
+        category.pack(side='left')
+        self.category = tk.Spinbox(ctgframe, values=ctgnames)
+        self.category.pack(side='right', fill='x', expand=True)
+
+        amountframe = tk.Frame(self.form)
+        amountframe.pack(fill='x')
+        amount = tk.Label(amountframe, text='Amount', width=10, anchor='w')
+        amount.pack(side='left')
+        self.amount = tk.Entry(amountframe, textvariable=self.amovar)
+        self.amount.pack(side='right', fill='x', expand=True)
+
+        contenframe = tk.Frame(self.form)
+        contenframe.pack(fill='x')
+        contents = tk.Label(contenframe, text='Contents', width=10, anchor='w')
+        contents.pack(side='left')
+        self.contents = tk.Entry(contenframe, textvariable=self.contvar)
+        self.contents.pack(side='right', fill='x', expand=True)
+
+        
+
+    def switch_content(self, content):
+        self.contentframe.destroy()
+        self.content(content)
+        
 
 
     

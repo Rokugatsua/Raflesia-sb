@@ -22,8 +22,14 @@ class Menu:
     def transaction(self):
         transmenu = tk.Menu(self.menu, tearoff=0)
         transmenu.add_command(
-            label="new",
+            label="View Transactions",
             command=lambda : self.parent.switch_frame("Transaction"))
+
+        transmenu.add_separator()
+        transmenu.add_command(
+            label="New Transactions",
+            command=lambda : self.parent.switch_frame("AddTransaction")
+        )
         self.menu.add_cascade(label="transaction", menu=transmenu)
 
     def account(self):
