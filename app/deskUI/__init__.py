@@ -311,6 +311,7 @@ class Transaction(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.parent = parent
         self.master = master
+        self.trans = model.Transaction()
         self.title()
         self.content()
 
@@ -325,10 +326,8 @@ class Transaction(tk.Frame):
         self.contentframe = tk.Frame(self)
         self.contentframe.pack(fill='both',expand=True)
 
-        transaction = [
-            ('13', 'beli', 'soci', 'cash', 1000000),
-            ('13', 'beli', 'soci', 'cash', -20000)
-        ]
+        ts = [list(val.values()) for val in self.trans.value]
+        transaction = [val[1:] for val in ts]
 
         tree = ttk.Treeview(self.contentframe)
         # Column declaration
@@ -404,9 +403,9 @@ class AddTransaction(tk.Frame):
         income = tk.Button(headmenu, text='income', relief='flat')
         income.config(command=lambda : self.switch_content('income'))
         income.pack(side='left')
-        transfer = tk.Button(headmenu, text='transfer', relief='flat')
-        transfer.config(command=lambda : self.switch_content('transfer'))
-        transfer.pack(side='left')
+        # transfer = tk.Button(headmenu, text='transfer', relief='flat')
+        # transfer.config(command=lambda : self.switch_content('transfer'))
+        # transfer.pack(side='left')
 
     def content(self, miniframe='expense'):
         self.contentframe = tk.Frame(self)
