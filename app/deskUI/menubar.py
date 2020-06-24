@@ -37,6 +37,7 @@ class Menu:
         accountmenu.add_command(
             label="View Details",
             command=lambda : self.parent.switch_frame('Account'))
+        accountmenu.add_separator()
         
         addmenu = tk.Menu(accountmenu, tearoff=0)
         addmenu.add_command(label="account", command=lambda : self.parent.switch_frame('AddAccount'))

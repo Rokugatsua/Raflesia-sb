@@ -1,7 +1,7 @@
 {
     "account": {
         "cash": {
-            "kas": -500101100,
+            "kas": -500111100,
             "ovo": 300,
             "gopay": 300000,
             "mandiri": 500000
@@ -10,7 +10,8 @@
             "bca": 300,
             "simpeda": 1815008,
             "mandiri": 3000000
-        }
+        },
+        "investment": {}
     },
     "expense": [
         "Food",
@@ -34,6 +35,14 @@
             "account": "kas",
             "category": "ovo",
             "amount": 100000
+        },
+        {
+            "_id": 3,
+            "date": "2020-06-24",
+            "content": "jajan",
+            "account": "kas",
+            "category": "Food",
+            "amount": -10000
         }
     ]
 }
