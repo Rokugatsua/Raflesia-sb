@@ -1,24 +1,29 @@
 {
     "account": {
         "cash": {
-            "kas": -500111100,
-            "ovo": 300,
-            "gopay": 300000,
-            "mandiri": 500000
+            "cash": 0,
+            "ovo": 0,
+            "gopay": 0,
+            "mandiri": 0
         },
         "bank": {
-            "bca": 300,
-            "simpeda": 1815008,
-            "mandiri": 3000000
+            "bca": 0,
+            "mandiri": 0
         },
-        "investment": {}
+        "investment": {
+            "reksadana":0
+        }
     },
     "expense": [
         "Food",
         "Social Life",
         "Self development"
     ],
-    "income": [],
+    "income": [
+        "salary",
+        "bonus",
+        "other"
+    ],
     "transaction": [
         {
             "_id": 1,
