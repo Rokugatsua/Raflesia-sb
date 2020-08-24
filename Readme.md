@@ -8,4 +8,4 @@ Build with:
 * Python 3.8.2
 * use Json file for database
 
-if have advice for this work please tell me or send on rokugatsua@outlool.co.id
+if have advice for this work please tell me or send on rokugatsua@outlook.co.id
